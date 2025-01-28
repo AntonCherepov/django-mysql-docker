@@ -10,24 +10,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Клонируем репозиторий
       - name: Check out repository
         uses: actions/checkout@v3
 
-      # 2. Запускаем docker-compose в фоновом режиме
-      - name: Build and run containers
-        run: docker-compose up -d --build
+      # Настраиваем Buildx (требуется для docker/compose-action)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-      # 3. Даем время сервисам на инициализацию 
-      #    (MySQL + Django) - обычно хватает 15-30 секунд
+      # Запускаем docker-compose через официальный action
+      - name: Compose up
+        uses: docker/compose-action@v2
+        with:
+          files: docker-compose.yml
+          build: true
+          up: true
+          detach: true
+
       - name: Wait for services to be ready
         run: sleep 15
 
-      # 4. Проверяем, что Django-сервер отвечает без ошибок на http://localhost:8000/
       - name: Check Django server
         run: curl --fail http://localhost:8000/ || exit 1
 
-      # 5. Останавливаем контейнеры
-      - name: Shutdown
-        if: always()
-        run: docker-compose down
+      - name: Compose down
+        uses: docker/compose-action@v2
+        with:
+          files: docker-compose.yml
+          down: true
