@@ -22,7 +22,7 @@ jobs:
 
       # 3. Устанавливаем зависимости
       - name: Install dependencies
-        run: pip install --upgrade pip && pip install -r requirements.txt
+        run: pip install --upgrade pip && pip install django
 
       # 4. Применяем миграции (создание/обновление SQLite-базы)
       - name: Migrate
