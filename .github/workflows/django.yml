@@ -2,7 +2,7 @@ name: Django CI (SQLite, no Docker)
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "mysql_test" ]
   pull_request:
 
 jobs:
@@ -38,7 +38,7 @@ jobs:
 
       # 3. Устанавливаем зависимости
       - name: Install dependencies
-        run: pip install --upgrade pip && pip install django
+        run: pip install --upgrade pip && pip install django && pip install mysqlclient
 
       # 4. Применяем миграции (создание/обновление SQLite-базы)
       - name: Migrate
