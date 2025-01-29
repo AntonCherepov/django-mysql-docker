@@ -26,7 +26,7 @@ jobs:
 
       # 4. Применяем миграции (создание/обновление SQLite-базы)
       - name: Migrate
-        run: python manage.py migrate
+        run: python app/manage.py migrate
 
       # 5. Запускаем сервер в фоне, ждём пару секунд и проверяем curl
       - name: Check server
