@@ -22,7 +22,7 @@ jobs:
         run: docker-compose up -d --build
 
       - name: Wait for services to be ready
-        run: sleep 15
+        run: sleep 30
 
       - name: Check Django server
         run: curl --fail http://localhost:8000/ || exit 1
