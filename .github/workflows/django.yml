@@ -22,13 +22,13 @@ jobs:
         run: docker-compose up -d --build
 
       - name: Wait for services to be ready
-        run: sleep 10
+        run: sleep 40
 
       - name: Logs for web
         run: docker-compose logs web
-
-      - name: Show logs
-        run: docker-compose logs web
+      
+      - name: Logs for db
+        run: docker-compose logs db
 
       - name: Check Django server
         run: curl --fail http://localhost:8000/ || exit 1
